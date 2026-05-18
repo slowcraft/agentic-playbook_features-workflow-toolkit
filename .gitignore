@@ -1,0 +1,67 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.iml
+.project
+.settings/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.pnp.*
+
+# Virtual environments
+.venv/
+venv/
+env/
+.python-version
+
+# Build artifacts
+dist/
+build/
+*.egg
+
+# Secrets — never commit
+.env
+.env.local
+.env.production
+.env.*.local
+*.pem
+*.key
+credentials.json
+service-account*.json
+
+# Local-only working state
+.claude/sessions/
+.claude/last-eval.json
+.research-state.json
+
+# Operator-only files — kept locally, never published
+MARKETPLACE.md
+TODO.md
+
+# OS / misc
+Thumbs.db
+desktop.ini

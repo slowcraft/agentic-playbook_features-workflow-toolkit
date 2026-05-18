@@ -1,0 +1,20 @@
+{
+  "name": "agent-workflow-toolkit",
+  "description": "A structured-artifacts workflow for client-project engineering with Claude Code. Skills for writing stories, dispatching parallel-agent batches, and graduated research — plus templates and opt-in hook / CI examples for workflow automation.",
+  "author": {
+    "name": "Darius Coste"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/slowcraft/agentic-playbook_features-workflow-toolkit",
+  "repository": "https://github.com/slowcraft/agentic-playbook_features-workflow-toolkit",
+  "keywords": [
+    "workflow",
+    "agents",
+    "decisions",
+    "stories",
+    "scaffolding",
+    "skills",
+    "parallel-dispatch",
+    "scenario-catalog"
+  ]
+}

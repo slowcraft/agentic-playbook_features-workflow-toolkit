@@ -1,0 +1,97 @@
+# .claude-toolkit.yaml
+#
+# Project conventions consumed by every skill in the agent-workflow-toolkit plugin.
+# Commit this file to your repo so all engineers + future-Claude-sessions get the same conventions.
+# NO SECRETS in this file — it's committed.
+
+project:
+  name: <your-project>                          # human-readable project name
+  feature: <feature-slug>                       # the feature this config governs
+  language: <python | typescript | go | rust | ...>
+  package_manager: <uv | poetry | pip | pnpm | npm | yarn | cargo | go-mod | ...>
+  test_runner: <pytest | vitest | jest | go-test | cargo-test | ...>
+  test_command: "<full command to run tests>"
+  test_marker_for_eval: <marker>                # optional — marker for the slow eval suite
+  lint_command: "<full command>"                # optional
+  type_check_command: "<full command>"          # optional
+  env_prep: |
+    # multi-line block that activates the env / cds into the right dir
+    # example for a python uv project:
+    # cd src/api
+    # uv sync
+    # export PYTHONPATH="$(pwd):$PYTHONPATH"
+
+commits:
+  format: conventional-commits                  # conventional-commits | gitmoji | semantic-release | free
+  co_author_trailer: false                      # almost always false — no LLM trailer
+  body_style: short                             # short | long
+  ticket_patterns:
+    - "[#<id>]"                                 # external tracker (ADO / JIRA / GH / Linear)
+    - "[story:<slug>]"                          # internal stories with no external ticket
+
+branches:
+  model: single-tier                            # single-tier | two-tier | trunk
+  # If two-tier:
+  # foundation_branch: feature/<feature>-mvp
+  # integration_branch: feature/<feature>-dev
+  integration_branch: feature/<feature>
+  story_prefix: story/
+
+paths:
+  decisions_dir: .claude/docs/<feature>/decisions/
+  decisions_table_file: decisions_and_punch_list.md
+  adrs_dir: .claude/docs/<feature>/decisions/adrs/
+  specs_dir: .claude/docs/<feature>/specs/
+  scenario_catalog_file: specs/test_scenarios_catalog.md
+  stories_dir: .claude/docs/<feature>/stories/
+  stories_done_dir: .claude/docs/<feature>/stories/done/
+  stories_future_dir: .claude/docs/<feature>/stories/future/
+  sequence_file: stories/SEQUENCE_AND_DEPENDENCIES.md
+  experiments_dir: .claude/docs/<feature>/experiments/
+  research_dir: .claude/docs/<feature>/research/
+  fixtures_dir: <project-specific path to eval corpus, if any>
+  module_root: <project-specific path to the module under work>
+
+stories:
+  # Optional. Path to a markdown file used as the story template by the
+  # `writing-stories` skill. The skill's resolution order (first match wins):
+  #   1. this field (if set)
+  #   2. <stories_dir>/_template.md (convention)
+  #   3. most recent file in <stories_dir>/done/ (inferred)
+  #   4. built-in default in the skill
+  # Set this only if your template needs to live somewhere non-conventional.
+  # template_file: .claude/docs/<feature>/stories/_template.md
+
+forbidden_paths:                                # paths agents must never touch
+  - .claude/                                    # always include this
+  # - src/ui/
+  # - <other paths agents shouldn't edit>
+
+high_risk_shared_files:                         # files where parallel agents collide
+  # - <package manifest, e.g. pyproject.toml or package.json>
+  # - <lockfile, e.g. uv.lock or pnpm-lock.yaml>
+  # - <shared test config, e.g. conftest.py>
+
+stable_id_patterns:                             # regexes the toolkit's CI checks enforce
+  decision: '^A\d+'
+  catalog_row:
+    # one regex per criterion family in your catalog
+    # <criterion-1>: '^<PREFIX1>-\d+'
+    # <criterion-2>: '^<PREFIX2>-\d+'
+  adr: '^ADR-\d{4}'
+  story_done: '^\d{4}_'
+
+dispatch:                                       # defaults for subagent dispatch
+  default_model: opus
+  default_isolation: worktree
+  default_background: true
+
+automation:                                     # toggles per automation surface
+  skills:
+    auto_trigger_on_decision_phrases: true
+    auto_trigger_on_catalog_phrases: true
+    auto_trigger_on_experiment_phrases: true
+  ci:
+    enforce_stable_ids: true
+    enforce_commit_format: true
+    enforce_sequence_doc_invariants: true

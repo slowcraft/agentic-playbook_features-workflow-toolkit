@@ -1,0 +1,12 @@
+# gitleaks config for agent-workflow-toolkit.
+# Uses gitleaks' built-in ruleset and allowlists a few known-safe paths.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "agent-workflow-toolkit allowlist"
+paths = [
+    # detect-secrets baseline — scanned separately, contains masked hashes
+    '''\.secrets\.baseline$''',
+]

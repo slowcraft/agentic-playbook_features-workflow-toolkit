@@ -1,0 +1,14 @@
+{
+  "name": "agent-workflow-toolkit",
+  "owner": {
+    "name": "Darius Coste"
+  },
+  "description": "Structured-artifacts workflow toolkit for client-project engineering with Claude Code.",
+  "plugins": [
+    {
+      "name": "agent-workflow-toolkit",
+      "source": "./plugins/agent-workflow-toolkit",
+      "description": "Ships skills for writing stories, dispatching parallel agents, and graduated research. Plus templates and opt-in hook / CI examples."
+    }
+  ]
+}

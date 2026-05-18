@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Actions are SHA-pinned (not @vX) so a tag-rewrite attack on an upstream
+# Action repo cannot silently change what runs on this repo's CI.
+# Comment after the SHA records the human-readable version for reviewers.
+
+jobs:
+  pre-commit:
+    name: Pre-commit hooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
+        with:
+          python-version: "3.12"
+      - name: Install pre-commit
+        run: pip install pre-commit==4.5.1
+      - name: Run all hooks
+        run: pre-commit run --all-files --show-diff-on-failure
+
+  link-check:
+    name: Markdown link check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: lycheeverse/lychee-action@7cd0af4c74a61395d455af97419279d86aafaede  # v2.0.2
+        with:
+          # --accept treats 302/403/429 as OK in addition to 2xx (login redirects,
+          # anti-bot pages, rate limits — reachable to humans, hostile to bots).
+          # Genuine 404 / ERROR still fail.
+          args: >-
+            --no-progress
+            --include-fragments
+            --accept 200..=299,302,403,429
+            --max-retries 2
+            --retry-wait-time 5
+            --timeout 30
+            './**/*.md'
+          fail: true
