@@ -6,6 +6,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Added
+
+- `AGENTS.md` at the repo root — instruction surface for non-Claude-Code coding agents (Codex, Cursor, Aider, Cline, Continue, Gemini CLI, etc.). Tells each agent to read the `SKILL.md` files directly, translates Claude Code tool names (`WebSearch`, `WebFetch`, `Agent`, MCP-prefixed) to host-equivalent guidance, and explicitly carves Claude Code out (which uses the plugin install path instead). The file is the portability shim; the `SKILL.md` files remain canonical.
+
 ### Planned (T.2)
 
 - New skill: `reading-toolkit-config` (library — resolves `.claude-toolkit.yaml`)

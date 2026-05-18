@@ -81,6 +81,8 @@ Phase T.1 (foundation) shipped in v0.1.0: the three skills above + the feature-d
 
 **Coexistence with other plugins or user-level skills:** Skill names are namespaced by plugin (`agent-workflow-toolkit:deep-research-toolkit`, etc.), so they do not shadow or collide with similarly-themed skills installed elsewhere. No SessionStart hooks, no settings.json mutations, no auto-installed CI ship with the plugin — invariants live inside skill content only.
 
+**Using outside Claude Code:** Codex, Cursor, Aider, and other coding agents can apply the same workflow without the plugin install. See [AGENTS.md](AGENTS.md) at the repo root — it's the agent-readable shim that translates Claude Code tool names, points at the canonical `SKILL.md` files, and notes which primitives (notably subagent dispatch) don't translate.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
